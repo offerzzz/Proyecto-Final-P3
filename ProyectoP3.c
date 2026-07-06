@@ -87,3 +87,40 @@ void registrarTurno(RegistroProduccion *arreglo, int *total) {
     (*total)++;
     printf("Registro exitoso!\n");
 }
+int main () {
+RegistroProduccion registros[100]; 
+    int totalRegistros = 0;
+    int opcion;
+
+    cargarCSV(registros, &totalRegistros); // Carga automatica al iniciar
+
+    do {
+        printf("\n--- MENÚ PRINCIPAL ---\n"); 
+        printf("1. Registrar datos de turno\n");
+        printf("2. Listar registros\n");
+        printf("3. Guardar cambios\n");
+        printf("4. Salir\n");
+        printf("Seleccione opcion: ");
+        scanf("%d", &opcion);
+
+        switch(opcion) {
+            case 1:
+                registrarTurno(registros, &totalRegistros);
+                break;
+            case 2:
+                listarRegistros(registros, totalRegistros);
+                break;
+            case 3:
+                guardarCSV(registros, totalRegistros); 
+                break;
+            case 4:
+                guardarCSV(registros, totalRegistros); 
+                printf("Saliendo y guardando datos...\n");
+                break;
+            default:
+                printf("Opcion invalida.\n");
+        }
+    } while (opcion != 4);
+
+    return 0;
+}
