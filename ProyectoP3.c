@@ -37,7 +37,7 @@ void guardarCSV(RegistroProduccion *arreglo, int total) {
         printf("Error al abrir el archivo para guardar datos.\n");
         return;
     }
-    fprintf (archivo, "codigo_registro;fecha;centro_costo;turno;materia_prima_kg;tiempo_min;unidades_producidas\n");
+    fprintf (archivo, "codigo_registro;fecha;centro_costo;turno;materia_prima_kg;desperdicio_kg;tiempo_min;unidades_producidas\n");
     for (int i = 0; i < total; i++) {
         fprintf(archivo, "%s;%s;%s;%d;%.2f;%.2f;%d;%d\n",
                 arreglo[i].codigo_registro,
@@ -68,11 +68,11 @@ void registrarTurno(RegistroProduccion *arreglo, int *total) {
         return;
     }
     printf("Ingrese Codigo de Registro: ");
-    scanf("%15s", arreglo[*total].codigo_registro); 
+    scanf(" %15s", arreglo[*total].codigo_registro); 
     printf("Ingrese Fecha (DD/MM/AAAA): ");
-    scanf("%10s", arreglo[*total].fecha);
+    scanf(" %10s", arreglo[*total].fecha);
     printf("Ingrese Centro de Costo: ");
-    scanf("%19s", arreglo[*total].centro_costo);
+    scanf(" %19[^\n]", arreglo[*total].centro_costo);
     printf("Ingrese Turno (1, 2, 3): ");
     scanf("%d", &arreglo[*total].turno);
     printf("Ingrese Materia Prima (kg): ");
@@ -101,8 +101,10 @@ RegistroProduccion registros[100];
         printf("3. Guardar cambios\n");
         printf("4. Salir\n");
         printf("Seleccione opcion: ");
-        scanf("%d", &opcion);
-
+if (scanf("%d", &opcion) != 1) {
+    while (getchar() != '\n');
+    opcion = 0;
+}
         switch(opcion) {
             case 1:
                 registrarTurno(registros, &totalRegistros);
