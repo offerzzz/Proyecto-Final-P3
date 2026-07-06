@@ -31,3 +31,24 @@ void cargarCSV(RegistroProduccion *arreglo, int *total) {
     }
     fclose(archivo);
 }
+void guardarCSV(RegistroProduccion *arreglo, int total) {
+    FILE *archivo = fopen("produccion_turnos.csv", "w");
+    if (archivo == NULL) {
+        printf("Error al abrir el archivo para guardar datos.\n");
+        return;
+    }
+    fprintf (archivo, "codigo_registro;fecha;centro_costo;turno;materia_prima_kg;tiempo_min;unidades_producidas\n");
+    for (int i = 0; i < total; i++) {
+        fprintf(archivo, "%s;%s;%s;%d;%.2f;%.2f;%d;%d\n",
+                arreglo[i].codigo_registro,
+                arreglo[i].fecha,
+                arreglo[i].centro_costo,
+                arreglo[i].turno,
+                arreglo[i].materia_prima_kg,
+                arreglo[i].desperdicio_kg,
+                arreglo[i].tiempo_min,
+                arreglo[i].unidades_producidas);
+    }
+    fclose(archivo);
+    printf("Datos guardados exitosamente en produccion_turnos.csv\n");
+}
