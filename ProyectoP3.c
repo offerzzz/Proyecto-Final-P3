@@ -15,3 +15,19 @@ void cargarCSV(RegistroProduccion *arreglo, int *total) {
         printf("No se encontro archivo previo. Se creara uno nuevo al guardar.\n");
         return;
     }
+    char linea[256];
+    fgets(linea, sizeof(linea), archivo);
+    while (fgets(linea, sizeof(linea), archivo) != NULL) {
+        sscanf(linea, "%15[^;];%10[^;];%19[^;];%d;%f;%f;%d;%d",
+               arreglo[*total].codigo_registro,
+               arreglo[*total].fecha,
+               arreglo[*total].centro_costo,
+               &arreglo[*total].turno,
+               &arreglo[*total].materia_prima_kg,
+               &arreglo[*total].desperdicio_kg,
+               &arreglo[*total].tiempo_min,
+               &arreglo[*total].unidades_producidas);
+        (*total)++;
+    }
+    fclose(archivo);
+}
